@@ -85,3 +85,21 @@ If you use TGL in a scientific publication, we would appreciate citations to the
 ## License
 
 This project is licensed under the Apache-2.0 License.
+
+
+## Test Result Collection
+
+# Single Test Result Collection
+
+Wraps python train.py with the same arguments. Zero training overhead — uses tee to capture stdout/stderr while training runs, then parses the log after training completes into two files:
+
+```bash collect_results.sh --data WIKI --config config/TGN.yml```
+
+# Default: TGAT, TGN, APAN on WIKI
+```bash run_all_models.sh --data WIKI```
+
+# Custom model subset
+```bash run_all_models.sh --data REDDIT --models "TGAT TGN"```
+
+# Pass extra args to train.py (after --)
+```bash run_all_models.sh --data WIKI -- --eval_neg_samples 10```

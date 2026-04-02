@@ -61,10 +61,11 @@ class MailBox():
                 torch.index_select(self.mailbox_ts, 0, idx, out=self.pinned_mailbox_ts_buffs[i][:idx.shape[0]])
                 b.srcdata['mail_ts'] = self.pinned_mailbox_ts_buffs[i][:idx.shape[0]].cuda(non_blocking=True)
             else:
-                b.srcdata['mem'] = self.node_memory[b.srcdata['ID'].long()].cuda()
-                b.srcdata['mem_ts'] = self.node_memory_ts[b.srcdata['ID'].long()].cuda()
-                b.srcdata['mem_input'] = self.mailbox[b.srcdata['ID'].long()].cuda().reshape(b.srcdata['ID'].shape[0], -1)
-                b.srcdata['mail_ts'] = self.mailbox_ts[b.srcdata['ID'].long()].cuda()
+                idx = b.srcdata['ID'].cpu().long()
+                b.srcdata['mem'] = self.node_memory[idx].cuda()
+                b.srcdata['mem_ts'] = self.node_memory_ts[idx].cuda()
+                b.srcdata['mem_input'] = self.mailbox[idx].cuda().reshape(b.srcdata['ID'].shape[0], -1)
+                b.srcdata['mail_ts'] = self.mailbox_ts[idx].cuda()
 
     def update_memory(self, nid, memory, root_nodes, ts, neg_samples=1):
         if nid is None:

@@ -1,0 +1,8 @@
+build/
+DATA/
+tgl_env/
+tgl_env_new/
+results/
+__pycache__/
+*.pkl
+*.so
